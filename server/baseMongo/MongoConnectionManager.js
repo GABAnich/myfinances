@@ -1,16 +1,46 @@
 const config = require("../../config").dbConfig;
+const collections = require("../../config").collections;
+
+const BaseMongo = require("./BaseMongo");
 
 const mongodb = require("mongodb");
 const MongoClient = mongodb.MongoClient;
+const fs = require("fs");
+const path = require("path");
 
 class MongoConnectionManager {
     constructor() {
         this.db = undefined;
-        // validation
+        if (config.url === undefined || config.dbName === undefined) {
+            throw new Error("config.url or config.dbName undefined");
+        }
         this.dbUrl = config.url + config.dbName;
+        this.dals = {};
     }
 
-    // Promise or sync
+    setDals() {
+        collections.forEach(collectionName => {
+            Object.defineProperty(this.dals,
+                collectionName + "Dal", {
+                    configurable: true,
+                    enumerable: true,
+                    writable: true
+                });
+
+            let location = "../" + collectionName + 
+                        "/" + collectionName.charAt(0).toUpperCase() + 
+                        collectionName.slice(1) + "Dal.js";
+            location = path.resolve(__dirname, location);
+
+            if (fs.existsSync(location)) {
+                this.dals[collectionName + "Dal"] = 
+                    new (require(location))(this.connection, collectionName);
+            } else {
+                this.dals[collectionName + "Dal"] = new BaseMongo();
+            }
+        });
+    }
+
     connect() {
         return MongoClient.connect(this.dbUrl)
             .then(db => {

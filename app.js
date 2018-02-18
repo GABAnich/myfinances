@@ -1,5 +1,31 @@
 'use strict';
 
+let mongoConnectionManager = require("./server/baseMongo/MongoConnectionManager");
+
+mongoConnectionManager.connect()
+	.then(() => {
+		mongoConnectionManager.setDals();
+	})
+	.then(() => {
+		mongoConnectionManager.dals.usersDal.updateById("5a89a37d7cca8330eccded9c", {
+			$set: {
+				name: "James Franco"
+			}
+		})
+	})
+	.then(() => {
+		return mongoConnectionManager.dals.usersDal.findById("5a89a37d7cca8330eccded9c");
+	})
+	.then((doc) => {
+		console.log(doc);
+	})
+	.then(() => {
+		mongoConnectionManager.closeConnection();
+	})
+	.catch(err => {
+		if (err) throw err;
+	});
+
 var SwaggerExpress = require('swagger-express-mw');
 var app = require('express')();
 module.exports = app; // for testing
@@ -34,7 +60,7 @@ SwaggerExpress.create(config, function(err, swaggerExpress) {
 // 		return new UserDal(mongoConnectionManager.connection, "collection");
 // 	})
 // 	.then((userDal) => {
-// 		return userDal.findById("5a85dfb99ec98dddd5aeff8f");
+// 		return userDal.findById("5a86e7dfb8378027c05c8b3f");
 // 	})
 // 	.then((doc) => {
 // 		console.log(doc);
