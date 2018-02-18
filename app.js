@@ -8,9 +8,6 @@ var config = {
 	appRoot: __dirname // required config
 };
 
-var mongoInit = require("./server/baseMongo/mongo.init");
-mongoInit.init();
-
 SwaggerExpress.create(config, function(err, swaggerExpress) {
 	if (err) { throw err; }
 
@@ -28,3 +25,17 @@ SwaggerExpress.create(config, function(err, swaggerExpress) {
 		// console.log('try this:\ncurl http://127.0.0.1:' + port + '/hello?name=Scott');
 	}
 });
+
+// let UserDal = require("./server/users/UserDal");
+
+// const mongoConnectionManager = require("./server/baseMongo/MongoConnectionManager");
+// mongoConnectionManager.connect()
+// 	.then(() => {
+// 		return new UserDal(mongoConnectionManager.connection, "collection");
+// 	})
+// 	.then((userDal) => {
+// 		return userDal.findById("5a85dfb99ec98dddd5aeff8f");
+// 	})
+// 	.then((doc) => {
+// 		console.log(doc);
+// 	});

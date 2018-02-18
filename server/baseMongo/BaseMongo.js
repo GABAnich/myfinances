@@ -1,4 +1,8 @@
 class BaseMongo {
+    get collection() {
+        return this.db.collection(this.collectionName);
+    }
+
     insertOne(doc, options) {
         if (Object.keys(doc).length === 0) {
             return;
