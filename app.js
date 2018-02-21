@@ -6,25 +6,20 @@ mongoConnectionManager.connect()
 	.then(() => {
 		mongoConnectionManager.setDals();
 	})
+	// .then(() => {
+	// 	return mongoConnectionManager.collections.usersDal
+	// 		.findByLogin("email@gmail.com");
+	// })
+	// .then((doc) => {
+	// 	console.log(doc);
+	// });
 	.then(() => {
-		mongoConnectionManager.dals.usersDal.updateById("5a89a37d7cca8330eccded9c", {
-			$set: {
-				name: "James Franco"
-			}
-		})
-	})
-	.then(() => {
-		return mongoConnectionManager.dals.usersDal.findById("5a89a37d7cca8330eccded9c");
+		return mongoConnectionManager.collections.collectionDal
+			.findOne({});
 	})
 	.then((doc) => {
 		console.log(doc);
 	})
-	.then(() => {
-		mongoConnectionManager.closeConnection();
-	})
-	.catch(err => {
-		if (err) throw err;
-	});
 
 var SwaggerExpress = require('swagger-express-mw');
 var app = require('express')();
@@ -51,6 +46,67 @@ SwaggerExpress.create(config, function(err, swaggerExpress) {
 		// console.log('try this:\ncurl http://127.0.0.1:' + port + '/hello?name=Scott');
 	}
 });
+
+// mongoConnectionManager.connect()
+// 	.then(() => {
+// 		mongoConnectionManager.setDals();
+// 	})
+// 	.then(() => {
+// 		mongoConnectionManager.collections.usersDal
+// 			.createUser("email@gmail.com", "123456789", "Magnus", "Carlsen");
+// 	})
+// 	.then(() => {
+// 		return mongoConnectionManager.collections.usersDal
+// 			.findByLogin("email@gmail.com");
+// 	})
+// 	.then(doc => {
+// 		console.log(doc);
+// 	})
+// 	.then(() => {
+// 		mongoConnectionManager.collections.usersDal
+// 			.updateByLogin("email@gmail.com", {
+// 				$set: {
+// 					password: "987654321"
+// 				}
+// 			});
+// 	})
+// 	.then(() => {
+// 		return mongoConnectionManager.collections.usersDal
+// 			.findByLogin("email@gmail.com");
+// 	})
+// 	.then(doc => {
+// 		console.log(doc);
+// 	})
+// .then(() => {
+// 	mongoConnectionManager.collections.usersDal
+// 		.deleteByLogin("email@gmail.com");
+// });
+
+// mongoConnectionManager.connect()
+// 	.then(() => {
+// 		mongoConnectionManager.setDals();
+// 	})
+// 	.then(() => {
+// 		mongoConnectionManager.collections.usersDal.updateById("5a89a37d7cca8330eccded9c", {
+// 			$set: {
+// 				name: "James Franco"
+// 			}
+// 		})
+// 	})
+// 	.then(() => {
+// 		return mongoConnectionManager.collections.usersDal.findById("5a89a37d7cca8330eccded9c");
+// 	})
+// 	.then((doc) => {
+// 		console.log(doc);
+// 	})
+// 	.then(() => {
+// 		mongoConnectionManager.closeConnection();
+// 	})
+// 	.catch(err => {
+// 		if (err) {
+// 			console.log(err);
+// 		}
+// 	});
 
 // let UserDal = require("./server/users/UserDal");
 
