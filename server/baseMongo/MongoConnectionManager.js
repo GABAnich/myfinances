@@ -19,7 +19,7 @@ class MongoConnectionManager {
         this.collections = {};
     }
 
-    setDals() {
+    setCollections() {
         arrayOfCollections.forEach(collectionName => {
             let location = "collections/" + collectionName.charAt(0).toUpperCase() + 
                         collectionName.slice(1) + "Dal.js";
@@ -42,8 +42,7 @@ class MongoConnectionManager {
             })
             .catch(err => {
                 if (err) throw err;
-            });  
-
+            });
     }
 
     setConnection(db) {

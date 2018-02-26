@@ -36,6 +36,81 @@ paths:
           description: Error
           schema:
             $ref: "#/definitions/ErrorResponse"
+  /users:
+    x-swagger-router-controller: users
+    post:
+      parameters:
+        - in: query
+          name: login
+          type: string
+          required: true
+          description: User login
+        - in: query
+          name: password
+          type: string
+          required: true
+          description: User password
+        - in: query
+          name: firstName
+          type: string
+          required: true
+          description: User first name
+        - in: query
+          name: lastName
+          type: string
+          required: true
+          description: User last name
+      produces: 
+        - application/json
+      description: Create a new user
+      operationId: createUser
+      responses:
+        '200':
+          description: OK
+        default:
+          description: Error
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+  /users/id/{userId}:
+    x-swagger-router-controller: users
+    get:
+      parameters:
+        - in: path
+          name: userId
+          type: string
+          required: true
+          description: Numeric ID of the user to get
+      produces:
+        - application/json
+      description: Access to users
+      operationId: getUserById
+      responses:
+        '200':
+          description: OK
+        default:
+          description: Error
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+  /users/login/{userLogin}:
+    x-swagger-router-controller: users
+    get:
+      parameters:
+        - in: path
+          name: userLogin
+          type: string
+          required: true
+          description: Login of the user to get
+      produces:
+        - application/json
+      description: Access to users
+      operationId: getUserByLogin
+      responses:
+        '200':
+          description: OK
+        default:
+          description: Error
+          schema:
+            $ref: "#/definitions/ErrorResponse"
   /hello:
     # binds a127 app logic to a route
     x-swagger-router-controller: hello_world

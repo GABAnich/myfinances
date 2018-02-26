@@ -1,25 +1,20 @@
 'use strict';
 
-let mongoConnectionManager = require("./server/baseMongo/MongoConnectionManager");
+const mongoConnectionManager = require("./server/baseMongo/MongoConnectionManager");
 
 mongoConnectionManager.connect()
-	.then(() => {
-		mongoConnectionManager.setDals();
-	})
-	// .then(() => {
-	// 	return mongoConnectionManager.collections.usersDal
-	// 		.findByLogin("email@gmail.com");
-	// })
-	// .then((doc) => {
-	// 	console.log(doc);
-	// });
-	.then(() => {
-		return mongoConnectionManager.collections.collectionDal
-			.findOne({});
-	})
-	.then((doc) => {
-		console.log(doc);
-	})
+.then(() => {
+    console.log("Connected");
+})
+.then(() => {
+    mongoConnectionManager.setCollections();
+})
+.then(() => {
+    console.log("Collections inizialized");
+});
+// .then(() => {
+//     global.mongoConnectionManager = mongoConnectionManager;
+// });
 
 var SwaggerExpress = require('swagger-express-mw');
 var app = require('express')();
@@ -46,6 +41,25 @@ SwaggerExpress.create(config, function(err, swaggerExpress) {
 		// console.log('try this:\ncurl http://127.0.0.1:' + port + '/hello?name=Scott');
 	}
 });
+
+// mongoConnectionManager.connect()
+// 	.then(() => {
+// 		mongoConnectionManager.setDals();
+// 	})
+// 	// .then(() => {
+// 	// 	return mongoConnectionManager.collections.usersDal
+// 	// 		.findByLogin("email@gmail.com");
+// 	// })
+// 	// .then((doc) => {
+// 	// 	console.log(doc);
+// 	// });
+// 	.then(() => {
+// 		return mongoConnectionManager.collections.collectionDal
+// 			.findOne({});
+// 	})
+// 	.then((doc) => {
+// 		console.log(doc);
+// 	})
 
 // mongoConnectionManager.connect()
 // 	.then(() => {

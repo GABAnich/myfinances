@@ -1,0 +1,6 @@
+// class for handling errors
+// base class and child for specific class
+// Many types of errors
+
+// swagger + http server
+// url = return json

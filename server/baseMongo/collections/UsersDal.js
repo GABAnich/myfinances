@@ -9,6 +9,17 @@ class UsersDal extends BaseMongo {
         this.ObjectID = ObjectID;
     }
 
+    createUser(login, password, firstName, lastName) {
+        let query = {
+            login: login,
+            password: password,
+            firstName: firstName,
+            lastName: lastName
+        }
+
+        return this.insertOne(query);
+    }
+
     findById(id) {
         let query = {
             _id: new this.ObjectID(id)
@@ -39,17 +50,6 @@ class UsersDal extends BaseMongo {
         };
 
         return this.updateOne(query, update, options);
-    }
-
-    createUser(login, password, firstName, lastName) {
-        let query = {
-            login: login,
-            password: password,
-            firstName: firstName,
-            lastName: lastName
-        }
-
-        return this.insertOne(query);
     }
 
     deleteById(id) {
