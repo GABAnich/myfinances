@@ -79,7 +79,7 @@ paths:
           name: userId
           type: string
           required: true
-          description: Numeric ID of the user to get
+          description: String ID of the user to get
       produces:
         - application/json
       description: Access to users
@@ -91,6 +91,24 @@ paths:
           description: Error
           schema:
             $ref: "#/definitions/ErrorResponse"
+    delete:
+      parameters:
+        - in: path
+          name: userId
+          type: string
+          required: true
+          description: String ID for delete user
+      operationId: deleteUserById
+      summary: Delete user
+      description: Delete user by ID
+      responses:
+        200:
+          description: OK
+        default:
+          description: Error
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+    
   /users/login/{userLogin}:
     x-swagger-router-controller: users
     get:
@@ -111,6 +129,24 @@ paths:
           description: Error
           schema:
             $ref: "#/definitions/ErrorResponse"
+    delete:
+      parameters:
+        - in: path
+          name: userLogin
+          type: string
+          required: true
+          description: String ID for delete user
+      operationId: deleteUserByLogin
+      summary: Delete user
+      description: Delete user by Login
+      responses:
+        200:
+          description: OK
+        default:
+          description: Error
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+  
   /hello:
     # binds a127 app logic to a route
     x-swagger-router-controller: hello_world

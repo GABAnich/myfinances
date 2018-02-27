@@ -18,8 +18,22 @@ let getUserByLogin = function(userLogin) {
     return mongoConnectionManager.collections.usersDal.findByLogin(userLogin);
 }
 
+let deleteUserById = function(userId) {
+    // Validations params
+
+    return mongoConnectionManager.collections.usersDal.deleteById(userId);
+}
+
+let deleteUserByLogin = function(userLogin) {
+    // Validation params
+
+    return mongoConnectionManager.collections.usersDal.deleteByLogin(userLogin);
+}
+
 module.exports = {
     createUser: createUser,
     getUserById: getUserById,
-    getUserByLogin: getUserByLogin
+    getUserByLogin: getUserByLogin,
+    deleteUserById: deleteUserById,
+    deleteUserByLogin: deleteUserByLogin
 }
