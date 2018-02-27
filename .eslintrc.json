@@ -15,12 +15,13 @@
         ],
         "quotes": [
             "error",
-            "single"
+            "double"
         ],
         "semi": [
             "error",
             "always"
-        ]
+        ],
+        "no-console": "off"
     },
     "globals": {
         "it": true,

@@ -1,23 +1,23 @@
-'use strict';
+"use strict";
 
 const mongoConnectionManager = require("./server/baseMongo/MongoConnectionManager");
 
 mongoConnectionManager.connect()
-.then(() => {
-    console.log("Connected");
-})
-.then(() => {
-    mongoConnectionManager.setCollections();
-})
-.then(() => {
-    console.log("Collections inizialized");
-});
+	.then(() => {
+		console.log("Connected");
+	})
+	.then(() => {
+		mongoConnectionManager.setCollections();
+	})
+	.then(() => {
+		console.log("Collections inizialized");
+	});
 // .then(() => {
 //     global.mongoConnectionManager = mongoConnectionManager;
 // });
 
-var SwaggerExpress = require('swagger-express-mw');
-var app = require('express')();
+var SwaggerExpress = require("swagger-express-mw");
+var app = require("express")();
 module.exports = app; // for testing
 
 var config = {
@@ -37,7 +37,7 @@ SwaggerExpress.create(config, function(err, swaggerExpress) {
 		console.log("Server is running on http://localhost:3000");
 	});
 
-	if (swaggerExpress.runner.swagger.paths['/hello']) {
+	if (swaggerExpress.runner.swagger.paths["/hello"]) {
 		// console.log('try this:\ncurl http://127.0.0.1:' + port + '/hello?name=Scott');
 	}
 });
