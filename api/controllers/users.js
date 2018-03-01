@@ -36,6 +36,32 @@ let getUserByLogin = function(req, res) {
 		});
 };
 
+let updateUserById = function(req, res) {
+	let userId = req.swagger.params.userId.value;
+	let firstName = req.swagger.params.firstName.value;
+	let lastName = req.swagger.params.lastName.value;
+
+	usersServices.updateUserById(userId, firstName, lastName)
+		.then((doc) => {
+			res.set("Content-Type", "application/json");
+			res.write(JSON.stringify(doc, null, 4));
+			res.end();
+		});
+}
+
+let updateUserByLogin = function(req, res) {
+	let userLogin = req.swagger.params.userLogin.value;
+	let firstName = req.swagger.params.firstName.value;
+	let lastName = req.swagger.params.lastName.value;
+
+	usersServices.updateUserByLogin(userLogin, firstName, lastName)
+		.then((doc) => {
+			res.set("Content-Type", "application/json");
+			res.write(JSON.stringify(doc, null, 4));
+			res.end();
+		});
+}
+
 let deleteUserById = function(req, res) {
 	let userId = req.swagger.params.userId.value;
 
@@ -62,6 +88,8 @@ module.exports = {
 	createUser: createUser,
 	getUserById: getUserById,
 	getUserByLogin: getUserByLogin,
+	updateUserById: updateUserById,
+	updateUserByLogin: updateUserByLogin,
 	deleteUserById: deleteUserById,
 	deleteUserByLogin: deleteUserByLogin
 };

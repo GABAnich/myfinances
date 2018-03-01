@@ -18,6 +18,28 @@ let getUserByLogin = function(userLogin) {
 	return mongoConnectionManager.collections.usersDal.findByLogin(userLogin);
 };
 
+let updateUserById = function(userId, firstName, lastName) {
+	// Validation params
+
+	return mongoConnectionManager.collections.usersDal.updateById(userId, {
+		$set: {
+			firstName: firstName,
+			lastName: lastName
+		}
+	});
+}
+
+let updateUserByLogin = function(userLogin, firstName, lastName) {
+	// Validation params
+
+	return mongoConnectionManager.collections.usersDal.updateByLogin(userLogin, {
+		$set: {
+			firstName: firstName,
+			lastName: lastName
+		}
+	})
+}
+
 let deleteUserById = function(userId) {
 	// Validations params
 
@@ -34,6 +56,8 @@ module.exports = {
 	createUser: createUser,
 	getUserById: getUserById,
 	getUserByLogin: getUserByLogin,
+	updateUserById: updateUserById,
+	updateUserByLogin: updateUserByLogin,
 	deleteUserById: deleteUserById,
 	deleteUserByLogin: deleteUserByLogin
 };

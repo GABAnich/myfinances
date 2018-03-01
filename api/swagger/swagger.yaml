@@ -91,6 +91,29 @@ paths:
           description: Error
           schema:
             $ref: "#/definitions/ErrorResponse"
+    put:
+      parameters:
+        - in: path
+          name: userId
+          type: string
+          required: true
+          description: String ID of the user to put
+        - in: query
+          name: firstName
+          type: string
+          required: true
+        - in: query
+          name: lastName
+          type: string
+          required: true
+      operationId: updateUserById
+      responses:
+        200:
+          description: OK
+        default:
+          description: Error
+          schema:
+            $ref: "#/definitions/ErrorResponse"
     delete:
       parameters:
         - in: path
@@ -124,6 +147,29 @@ paths:
       operationId: getUserByLogin
       responses:
         '200':
+          description: OK
+        default:
+          description: Error
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+    put:
+      parameters:
+        - in: path
+          name: userLogin
+          type: string
+          required: true
+          description: String login of the user to put
+        - in: query
+          name: firstName
+          type: string
+          required: true
+        - in: query
+          name: lastName
+          type: string
+          required: true
+      operationId: updateUserByLogin
+      responses:
+        200:
           description: OK
         default:
           description: Error
