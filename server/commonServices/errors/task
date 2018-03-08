@@ -4,3 +4,10 @@
 
 // swagger + http server
 // url = return json
+
+// Для кожної функції з сервісу, якій потрібна валідація, написати свою функцію, у validator.js
+// Помилки для user'ів написати н usersError, а базові унаслідувати з BaseErrors
+
+// content type for all
+
+express servStatic

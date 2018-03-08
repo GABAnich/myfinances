@@ -47,7 +47,7 @@ let updateUserById = function(req, res) {
 			res.write(JSON.stringify(doc, null, 4));
 			res.end();
 		});
-}
+};
 
 let updateUserByLogin = function(req, res) {
 	let userLogin = req.swagger.params.userLogin.value;
@@ -60,7 +60,7 @@ let updateUserByLogin = function(req, res) {
 			res.write(JSON.stringify(doc, null, 4));
 			res.end();
 		});
-}
+};
 
 let deleteUserById = function(req, res) {
 	let userId = req.swagger.params.userId.value;

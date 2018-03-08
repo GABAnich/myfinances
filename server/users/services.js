@@ -1,25 +1,35 @@
 const mongoConnectionManager = require("../../server/baseMongo/MongoConnectionManager");
+const validator = require("./validator");
 
 let createUser = function(login, password, firstName, lastName) {
-	// Validation params
+	validator.isEmptyParams({
+		login: login,
+		password: password,
+		firstName: firstName,
+		lastName: lastName
+	});
+
+	validator.isCorrectLogin(login);
 
 	return mongoConnectionManager.collections.usersDal.createUser(login, password, firstName, lastName);
 };
 
 let getUserById = function(userId) {
-	// Validations params
-
 	return mongoConnectionManager.collections.usersDal.findById(userId);
 };
 
 let getUserByLogin = function(userLogin) {
-	// Validations params
+	validator.isCorrectLogin(userLogin);
 
 	return mongoConnectionManager.collections.usersDal.findByLogin(userLogin);
 };
 
 let updateUserById = function(userId, firstName, lastName) {
-	// Validation params
+	validator.isEmptyParams({
+		userId: userId,
+		firstName: firstName,
+		lastName: lastName
+	});
 
 	return mongoConnectionManager.collections.usersDal.updateById(userId, {
 		$set: {
@@ -27,27 +37,31 @@ let updateUserById = function(userId, firstName, lastName) {
 			lastName: lastName
 		}
 	});
-}
+};
 
 let updateUserByLogin = function(userLogin, firstName, lastName) {
-	// Validation params
+	validator.isEmptyParams({
+		userLogin: userLogin,
+		firstName: firstName,
+		lastName: lastName
+	});
+
+	validator.isCorrectLogin(userLogin);
 
 	return mongoConnectionManager.collections.usersDal.updateByLogin(userLogin, {
 		$set: {
 			firstName: firstName,
 			lastName: lastName
 		}
-	})
-}
+	});
+};
 
 let deleteUserById = function(userId) {
-	// Validations params
-
 	return mongoConnectionManager.collections.usersDal.deleteById(userId);
 };
 
 let deleteUserByLogin = function(userLogin) {
-	// Validation params
+	validator.isCorrectLogin(userLogin);
 
 	return mongoConnectionManager.collections.usersDal.deleteByLogin(userLogin);
 };
