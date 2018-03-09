@@ -11,6 +11,11 @@ let createUser = function(login, password, firstName, lastName) {
 
 	validator.isCorrectLogin(login);
 
+	validator.isCorrectName({
+		firstName: firstName,
+		lastName: lastName
+	});
+
 	return mongoConnectionManager.collections.usersDal.createUser(login, password, firstName, lastName);
 };
 
@@ -31,6 +36,11 @@ let updateUserById = function(userId, firstName, lastName) {
 		lastName: lastName
 	});
 
+	validator.isCorrectName({
+		firstName: firstName,
+		lastName: lastName
+	});
+
 	return mongoConnectionManager.collections.usersDal.updateById(userId, {
 		$set: {
 			firstName: firstName,
@@ -47,6 +57,11 @@ let updateUserByLogin = function(userLogin, firstName, lastName) {
 	});
 
 	validator.isCorrectLogin(userLogin);
+
+	validator.isCorrectName({
+		firstName: firstName,
+		lastName: lastName
+	});
 
 	return mongoConnectionManager.collections.usersDal.updateByLogin(userLogin, {
 		$set: {

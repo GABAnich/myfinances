@@ -16,7 +16,17 @@ let isCorrectLogin = function(login) {
 	}
 };
 
+let isCorrectName = function(obj) {
+	Object.keys(obj).forEach((property) => {
+		if ( !/^[a-zA-Z]+$/.test(obj[property]) ) {
+			// tmp
+			throw new Error(property + " must contain only letters");
+		}
+	});
+};
+
 module.exports = {
 	isEmptyParams: isEmptyParams,
-	isCorrectLogin: isCorrectLogin
+	isCorrectLogin: isCorrectLogin,
+	isCorrectName: isCorrectName
 };
