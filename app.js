@@ -18,6 +18,7 @@ mongoConnectionManager.connect()
 
 var SwaggerExpress = require("swagger-express-mw");
 var app = require("express")();
+// app use content type
 module.exports = app; // for testing
 
 var config = {
