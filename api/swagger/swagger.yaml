@@ -14,6 +14,7 @@ schemes:
 # format of bodies a client can send (Content-Type)
 consumes:
   - application/json
+  - application/x-www-form-urlencoded
 # format of the responses to the client (Accepts)
 produces:
   - application/json
@@ -40,22 +41,22 @@ paths:
     x-swagger-router-controller: users
     post:
       parameters:
-        - in: query
+        - in: formData
           name: login
           type: string
           required: true
           description: User login
-        - in: query
+        - in: formData
           name: password
           type: string
           required: true
           description: User password
-        - in: query
+        - in: formData
           name: firstName
           type: string
           required: true
           description: User first name
-        - in: query
+        - in: formData
           name: lastName
           type: string
           required: true

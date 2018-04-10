@@ -1,7 +1,18 @@
 const mongoConnectionManager = require("../../server/baseMongo/MongoConnectionManager");
 const validator = require("./validator");
 
+let wait = function(ms) {
+    var start = Date.now(),
+        now = start;
+    while (now - start < ms) {
+      now = Date.now();
+    }
+}
+
 let createUser = function(login, password, firstName, lastName) {
+	// artificial delay for testing
+	wait(3000);
+
 	validator.isEmptyParams({
 		login: login,
 		password: password,
@@ -10,6 +21,8 @@ let createUser = function(login, password, firstName, lastName) {
 	});
 
 	validator.isCorrectLogin(login);
+
+	// Check for exist login
 
 	validator.isCorrectName({
 		firstName: firstName,
