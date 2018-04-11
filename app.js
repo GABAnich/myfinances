@@ -11,6 +11,9 @@ mongoConnectionManager.connect()
 	})
 	.then(() => {
 		console.log("Collections inizialized");
+	})
+	.catch((err) => {
+		if (err) throw err;
 	});
 // .then(() => {
 //     global.mongoConnectionManager = mongoConnectionManager;
