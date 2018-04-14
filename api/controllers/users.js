@@ -12,10 +12,13 @@ let createUser = function(req, res) {
 			res.write(JSON.stringify(doc, null, 4));
 			res.end();
 		}, (err) => {
-			console.log(err);
 			res.set("Content-Type", "application/json");
-			res.status(409);
-			res.write(JSON.stringify({message: err.message}, null, 4));
+			res.status(err.message);
+			if (err.message == "409") {
+				res.write(JSON.stringify({message: err.message + " login is already exist"}, null, 4));
+			} else {
+				res.write(JSON.stringify({message: err.message}, null, 4));
+			}
 			res.end();
 		});
 };
