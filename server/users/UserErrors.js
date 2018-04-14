@@ -12,6 +12,10 @@ class UserErrors extends BaseErrors {
 	errorCorrectName(property) {
 		throw new Error(property + " must contain only letters");
 	}
+
+	errorBadPassword() {
+		throw new Error("Bad password");
+	}
 }
 
 module.exports = UserErrors;

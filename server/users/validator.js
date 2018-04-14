@@ -16,6 +16,15 @@ let isCorrectLogin = function(login) {
 	}
 };
 
+let isCorrectPassword = function(password) {
+	// Minimum eight characters, at least one uppercase letter, one lowercase letter, one number and one special character:
+	var re = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[~!@#$%^&*()_+=-\`<>?,./])[A-Za-z\d~!@#$%^&*()_+=-\`<>?,./]{8,}/;
+
+	if ( !re.test(password) ) {
+		userErrors.errorBadPassword();
+	}
+}
+
 let isCorrectName = function(obj) {
 	Object.keys(obj).forEach((property) => {
 		if ( !/^[a-zA-Z]+$/.test(obj[property]) ) {
@@ -27,5 +36,6 @@ let isCorrectName = function(obj) {
 module.exports = {
 	isEmptyParams: isEmptyParams,
 	isCorrectLogin: isCorrectLogin,
-	isCorrectName: isCorrectName
+	isCorrectName: isCorrectName,
+	isCorrectPassword: isCorrectPassword
 };
