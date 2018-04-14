@@ -11,6 +11,12 @@ let createUser = function(req, res) {
 			res.set("Content-Type", "application/json");
 			res.write(JSON.stringify(doc, null, 4));
 			res.end();
+		}, (err) => {
+			console.log(err);
+			res.set("Content-Type", "application/json");
+			res.status(409);
+			res.write(JSON.stringify({message: err.message}, null, 4));
+			res.end();
 		});
 };
 

@@ -1,5 +1,6 @@
 const mongoConnectionManager = require("../../server/baseMongo/MongoConnectionManager");
 const validator = require("./validator");
+const userErrors = new ( require("./UserErrors") );
 
 let wait = function(ms) {
     var start = Date.now(),
@@ -10,26 +11,33 @@ let wait = function(ms) {
 }
 
 let createUser = function(login, password, firstName, lastName) {
-	// artificial delay for testing
-	wait(3000);
+	return getUserByLogin(login)
+		.then((user) => {
+			if (user) {
+				userErrors.errorExistLogin(login);
+			}
 
-	validator.isEmptyParams({
-		login: login,
-		password: password,
-		firstName: firstName,
-		lastName: lastName
-	});
+			// artificial delay for testing
+			wait(3000);
 
-	validator.isCorrectLogin(login);
+			validator.isEmptyParams({
+				login: login,
+				password: password,
+				firstName: firstName,
+				lastName: lastName
+			});
 
-	// Check for exist login
+			validator.isCorrectLogin(login);
 
-	validator.isCorrectName({
-		firstName: firstName,
-		lastName: lastName
-	});
+			validator.isCorrectPassword(password);
 
-	return mongoConnectionManager.collections.usersDal.createUser(login, password, firstName, lastName);
+			validator.isCorrectName({
+				firstName: firstName,
+				lastName: lastName
+			});
+
+			return mongoConnectionManager.collections.usersDal.createUser(login, password, firstName, lastName);
+		});
 };
 
 let getUserById = function(userId) {

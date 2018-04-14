@@ -16,6 +16,10 @@ class UserErrors extends BaseErrors {
 	errorBadPassword() {
 		throw new Error("Bad password");
 	}
+
+	errorExistLogin(login) {
+		throw new Error(login + " is already exists");
+	}
 }
 
 module.exports = UserErrors;
