@@ -1,4 +1,6 @@
+const jwt = require("jsonwebtoken");
 const usersServices = require("../../server/users/services");
+const config = require("../../config");
 
 let createUser = function(req, res) {
 	let login = req.swagger.params.login.value.trim();
@@ -8,16 +10,19 @@ let createUser = function(req, res) {
 
 	usersServices.createUser(login, password, firstName, lastName)
 		.then((doc) => {
+			let token = jwt.sign({ id: doc.insertedId }, config.secret);
+
 			res.set("Content-Type", "application/json");
-			res.write(JSON.stringify(doc, null, 4));
+			res.write(JSON.stringify({ auth: true, token: token }, null, 4));
 			res.end();
 		}, (err) => {
 			res.set("Content-Type", "application/json");
-			res.status(err.message);
 			if (err.message == "409") {
-				res.write(JSON.stringify({message: err.message + " login is already exist"}, null, 4));
+				res.status(err.message);
+				res.write(JSON.stringify({ auth: false, message: err.message + " login is already exist" }, null, 4));
 			} else {
-				res.write(JSON.stringify({message: err.message}, null, 4));
+				res.status(401);
+				res.write(JSON.stringify({ auth: false, message: err.message }, null, 4));
 			}
 			res.end();
 		});
