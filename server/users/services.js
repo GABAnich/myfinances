@@ -2,6 +2,8 @@ const mongoConnectionManager = require("../../server/baseMongo/MongoConnectionMa
 const validator = require("./validator");
 const userErrors = new ( require("./UserErrors") );
 
+const bcryptjs = require("bcryptjs");
+
 let wait = function(ms) {
     var start = Date.now(),
         now = start;
@@ -36,7 +38,9 @@ let createUser = function(login, password, firstName, lastName) {
 				lastName: lastName
 			});
 
-			return mongoConnectionManager.collections.usersDal.createUser(login, password, firstName, lastName);
+			let hashedPassword = bcryptjs.hashSync(password);
+
+			return mongoConnectionManager.collections.usersDal.createUser(login, hashedPassword, firstName, lastName);
 		});
 };
 
