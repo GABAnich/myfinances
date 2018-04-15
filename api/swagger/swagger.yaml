@@ -37,6 +37,30 @@ paths:
           description: Error
           schema:
             $ref: "#/definitions/ErrorResponse"
+  /login:
+    x-swagger-router-controller: login
+    post:
+      parameters:
+        - in: formData
+          name: login
+          type: string
+          required: true
+          description: User login
+        - in: formData
+          name: password
+          type: string
+          required: true
+          description: User password
+      produces:
+        - application/json
+      operationId: authentication
+      responses:
+        '200':
+          description: OK
+        default:
+          description: Error
+          schema:
+            $ref: "#/definitions/ErrorResponse"
   /users:
     x-swagger-router-controller: users
     post:
