@@ -42,6 +42,7 @@ let createUser = function(login, password, firstName, lastName) {
 
 			return mongoConnectionManager.collections.usersDal.createUser(login, hashedPassword, firstName, lastName);
 		});
+		// catch if user not found and other
 };
 
 let getUserById = function(userId) {
@@ -100,7 +101,7 @@ let deleteUserById = function(userId) {
 	return mongoConnectionManager.collections.usersDal.deleteById(userId);
 };
 
-let deleteUserByLogin = function(userLogin) {
+function deleteUserByLogin(userLogin) {
 	validator.isCorrectLogin(userLogin);
 
 	return mongoConnectionManager.collections.usersDal.deleteByLogin(userLogin);
@@ -115,3 +116,6 @@ module.exports = {
 	deleteUserById: deleteUserById,
 	deleteUserByLogin: deleteUserByLogin
 };
+
+// деструктиризація
+// function Name() {}

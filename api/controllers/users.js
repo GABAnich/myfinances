@@ -9,22 +9,24 @@ let createUser = function(req, res) {
 	let lastName = req.swagger.params.lastName.value.trim();
 
 	usersServices.createUser(login, password, firstName, lastName)
-		.then((doc) => {
-			let token = jwt.sign({ id: doc.insertedId }, config.secret);
+		.then((user) => {
+			let token = jwt.sign({ id: user.insertedId }, config.secret);
 
 			res.set("Content-Type", "application/json");
 			res.write(JSON.stringify({ auth: true, token: token }, null, 4));
 			res.end();
-		}, (err) => {
-			res.set("Content-Type", "application/json");
-			if (err.message == "409") {
-				res.status(err.message);
-				res.write(JSON.stringify({ auth: false, message: err.message + " login is already exist" }, null, 4));
-			} else {
-				res.status(401);
-				res.write(JSON.stringify({ auth: false, message: err.message }, null, 4));
-			}
-			res.end();
+		})
+		.catch((err) => {
+			return new Error(userErrors.errorExistLogin(login, res));
+			// res.set("Content-Type", "application/json");
+			// if (err.message == "409") {
+			// 	res.status(err.message);
+			// 	// res.write(JSON.stringify({ auth: false, message: err.message + " login is already exist" }, null, 4));
+			// } else {
+			// 	res.status(401);
+			// 	res.write(JSON.stringify({ auth: false, message: err.message }, null, 4));
+			// }
+			// res.end();
 		});
 };
 
@@ -98,6 +100,7 @@ let deleteUserByLogin = function(req, res) {
 		});
 };
 
+// Деструктирізація
 module.exports = {
 	createUser: createUser,
 	getUserById: getUserById,

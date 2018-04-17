@@ -123,11 +123,11 @@ paths:
           type: string
           required: true
           description: String ID of the user to put
-        - in: query
+        - in: formData
           name: firstName
           type: string
           required: true
-        - in: query
+        - in: formData
           name: lastName
           type: string
           required: true
@@ -184,11 +184,11 @@ paths:
           type: string
           required: true
           description: String login of the user to put
-        - in: query
+        - in: formData
           name: firstName
           type: string
           required: true
-        - in: query
+        - in: formData
           name: lastName
           type: string
           required: true

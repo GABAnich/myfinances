@@ -17,8 +17,9 @@ class UserErrors extends BaseErrors {
 		throw new Error("Bad password");
 	}
 
-	errorExistLogin(login) {
-		throw new Error(409);
+	errorExistLogin(login, res) {
+		res.status(401);
+		return JSON.stringify({ status: '', auth: false, message: err.message + " login is already exist" });
 	}
 }
 
