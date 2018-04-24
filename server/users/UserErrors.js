@@ -18,7 +18,7 @@ class UserErrors extends BaseErrors {
 	}
 
 	errorExistLogin(login) {
-		throw new Error("User with login ${login} is already exist");
+		throw new Error(`User with login ${login} is already exist`);
 	}
 }
 
