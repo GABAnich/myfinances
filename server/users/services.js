@@ -1,6 +1,7 @@
 const mongoConnectionManager = require("../../server/baseMongo/MongoConnectionManager");
 const validator = require("./validator");
-const userErrors = new ( require("./UserErrors") );
+const UserErrors = require("./UserErrors");
+const userErrors = new UserErrors();
 
 const bcryptjs = require("bcryptjs");
 
@@ -12,10 +13,11 @@ let wait = function(ms) {
     }
 }
 
-let createUser = function(login, password, firstName, lastName) {
+function createUser(login, password, firstName, lastName) {
 	return getUserByLogin(login)
 		.then((user) => {
 			if (user) {
+				console.log( JSON.stringify(user) );
 				userErrors.errorExistLogin(login);
 			}
 
@@ -41,21 +43,20 @@ let createUser = function(login, password, firstName, lastName) {
 			let hashedPassword = bcryptjs.hashSync(password);
 
 			return mongoConnectionManager.collections.usersDal.createUser(login, hashedPassword, firstName, lastName);
-		});
-		// catch if user not found and other
+		})		
 };
 
-let getUserById = function(userId) {
+function getUserById(userId) {
 	return mongoConnectionManager.collections.usersDal.findById(userId);
 };
 
-let getUserByLogin = function(userLogin) {
+function getUserByLogin(userLogin) {
 	validator.isCorrectLogin(userLogin);
 
 	return mongoConnectionManager.collections.usersDal.findByLogin(userLogin);
 };
 
-let updateUserById = function(userId, firstName, lastName) {
+function updateUserById(userId, firstName, lastName) {
 	validator.isEmptyParams({
 		userId: userId,
 		firstName: firstName,
@@ -75,7 +76,7 @@ let updateUserById = function(userId, firstName, lastName) {
 	});
 };
 
-let updateUserByLogin = function(userLogin, firstName, lastName) {
+function updateUserByLogin(userLogin, firstName, lastName) {
 	validator.isEmptyParams({
 		userLogin: userLogin,
 		firstName: firstName,
@@ -97,7 +98,7 @@ let updateUserByLogin = function(userLogin, firstName, lastName) {
 	});
 };
 
-let deleteUserById = function(userId) {
+function deleteUserById(userId) {
 	return mongoConnectionManager.collections.usersDal.deleteById(userId);
 };
 
@@ -118,4 +119,3 @@ module.exports = {
 };
 
 // деструктиризація
-// function Name() {}

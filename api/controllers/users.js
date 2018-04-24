@@ -1,5 +1,6 @@
 const jwt = require("jsonwebtoken");
 const usersServices = require("../../server/users/services");
+const userErrors = new ( require("../../server/users/UserErrors") );
 const config = require("../../config");
 
 let createUser = function(req, res) {
@@ -17,16 +18,9 @@ let createUser = function(req, res) {
 			res.end();
 		})
 		.catch((err) => {
-			return new Error(userErrors.errorExistLogin(login, res));
-			// res.set("Content-Type", "application/json");
-			// if (err.message == "409") {
-			// 	res.status(err.message);
-			// 	// res.write(JSON.stringify({ auth: false, message: err.message + " login is already exist" }, null, 4));
-			// } else {
-			// 	res.status(401);
-			// 	res.write(JSON.stringify({ auth: false, message: err.message }, null, 4));
-			// }
-			// res.end();
+			console.log(err.message);
+			res.status(409);
+			res.json({message: err.message});
 		});
 };
 
