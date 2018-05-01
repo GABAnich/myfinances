@@ -23,7 +23,7 @@ let isCorrectPassword = function(password) {
 	if ( !re.test(password) ) {
 		userErrors.errorBadPassword();
 	}
-}
+};
 
 let isCorrectName = function(obj) {
 	Object.keys(obj).forEach((property) => {

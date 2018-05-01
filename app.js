@@ -20,7 +20,7 @@ var SwaggerExpress = require("swagger-express-mw");
 var app = require("express")();
 app.use( (req, res, next) => {
 	res.header("Content-Type", "application/json");
-  	next();
+	next();
 });
 // authmidleware перевірка токена
 // якщо токен не пройшов перевірку - помилка

@@ -1,7 +1,7 @@
 const jwt = require("jsonwebtoken");
 const usersServices = require("../../server/users/services");
-const userErrors = new ( require("../../server/users/UserErrors") );
 const config = require("../../config");
+const server = require("../../server/commonServices/server");
 
 let createUser = function(req, res) {
 	let login = req.swagger.params.login.value.trim();
@@ -13,14 +13,12 @@ let createUser = function(req, res) {
 		.then((user) => {
 			let token = jwt.sign({ id: user.insertedId }, config.secret);
 
-			res.set("Content-Type", "application/json");
+			res.status(201);
 			res.write(JSON.stringify({ auth: true, token: token }, null, 4));
 			res.end();
 		})
 		.catch((err) => {
-			console.log(err.message);
-			res.status(409);
-			res.json({message: err.message});
+			server.sendError(res, err);
 		});
 };
 
@@ -29,7 +27,6 @@ let getUserById = function(req, res) {
 
 	usersServices.getUserById(userId)
 		.then((doc) => {
-			res.set("Content-Type", "application/json");
 			res.write(JSON.stringify(doc, null, 4));
 			res.end();
 		});
@@ -40,9 +37,11 @@ let getUserByLogin = function(req, res) {
 
 	usersServices.getUserByLogin(userLogin)
 		.then((doc) => {
-			res.set("Content-Type", "application/json");
 			res.write(JSON.stringify(doc, null, 4));
 			res.end();
+		})
+		.catch((err) => {
+			server.sendError(res, err);
 		});
 };
 
@@ -53,7 +52,6 @@ let updateUserById = function(req, res) {
 
 	usersServices.updateUserById(userId, firstName, lastName)
 		.then((doc) => {
-			res.set("Content-Type", "application/json");
 			res.write(JSON.stringify(doc, null, 4));
 			res.end();
 		});
@@ -66,9 +64,11 @@ let updateUserByLogin = function(req, res) {
 
 	usersServices.updateUserByLogin(userLogin, firstName, lastName)
 		.then((doc) => {
-			res.set("Content-Type", "application/json");
 			res.write(JSON.stringify(doc, null, 4));
 			res.end();
+		})
+		.catch((err) => {
+			server.sendError(res, err);
 		});
 };
 
@@ -77,7 +77,6 @@ let deleteUserById = function(req, res) {
 
 	usersServices.deleteUserById(userId)
 		.then((doc) => {
-			res.set("Content-Type", "application/json");
 			res.write(JSON.stringify(doc, null, 4));
 			res.end();
 		});
@@ -88,13 +87,14 @@ let deleteUserByLogin = function(req, res) {
 
 	usersServices.deleteUserByLogin(userLogin)
 		.then((doc) => {
-			res.set("Content-Type", "application/json");
 			res.write(JSON.stringify(doc, null, 4));
 			res.end();
+		})
+		.catch((err) => {
+			server.sendError(res, err);
 		});
 };
 
-// Деструктирізація
 module.exports = {
 	createUser: createUser,
 	getUserById: getUserById,
