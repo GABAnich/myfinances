@@ -7,7 +7,6 @@ class UserErrors extends BaseErrors {
 
 	errorBadLogin() {
 		throw {message: "Bad login", status: 400};
-		// throw new Error("Bad login");
 	}
 
 	errorCorrectName(property) {
