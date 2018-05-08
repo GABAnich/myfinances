@@ -20,23 +20,6 @@ produces:
   - application/json
   - text/html
 paths:
-  /:
-    x-swagger-router-controller: homepage
-    get:
-      produces:
-        - text/html
-      description: Returns 'Homepage' to the caller
-      operationId: index_get
-      responses:
-        '200': 
-          description: OK
-          examples:
-            text/html: 
-              <html><body>Your HTML text</body></html>
-        default:
-          description: Error
-          schema:
-            $ref: "#/definitions/ErrorResponse"
   /login:
     x-swagger-router-controller: login
     post:
@@ -213,31 +196,6 @@ paths:
       responses:
         200:
           description: OK
-        default:
-          description: Error
-          schema:
-            $ref: "#/definitions/ErrorResponse"
-  
-  /hello:
-    # binds a127 app logic to a route
-    x-swagger-router-controller: hello_world
-    get:
-      description: Returns 'Hello' to the caller
-      # used as the method name of the controller
-      operationId: hello
-      parameters:
-        - name: name
-          in: query
-          description: The name of the person to whom to say hello
-          required: false
-          type: string
-      responses:
-        "200":
-          description: Success
-          schema:
-            # a pointer to a definition
-            $ref: "#/definitions/HelloWorldResponse"
-        # responses may fall through to errors
         default:
           description: Error
           schema:

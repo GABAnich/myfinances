@@ -1,6 +1,6 @@
-const mongoConnectionManager = require("../../server/baseMongo/MongoConnectionManager");
+const mongoConnectionManager = require("../common/baseMongo/MongoConnectionManager");
 
-let authentication = function(login, password) {
+let authentication = function(login) {
 	return mongoConnectionManager.collections.usersDal.findByLogin(login);
 };
 

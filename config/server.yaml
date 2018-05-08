@@ -3,5 +3,4 @@ dbConfig:
   dbName: mydb
 collections:
   - users
-  - collection
 secret: XKTU0x2TJn1JOud2IfJINKUhA2KY94fVsW58ZqgTltdQ2nqHRDQoZrkqb9IAXjg

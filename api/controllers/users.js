@@ -1,7 +1,7 @@
 const jwt = require("jsonwebtoken");
 const usersServices = require("../../server/users/services");
 const config = require("../../config");
-const server = require("../../server/commonServices/server");
+const server = require("../../server/common/services/errors/server");
 
 let createUser = function(req, res) {
 	let login = req.swagger.params.login.value.trim();
@@ -51,12 +51,18 @@ let updateUserById = function(req, res) {
 	let lastName = req.swagger.params.lastName.value.trim();
 	let token = req.headers["x-access-token"];
 
-	if (!token) return res.status(401).send({ auth: false, message: "No token provided." });
+	if (!token) {
+		return server.sendError(res, {obj: {message: "No token provided.", auth: false}, status: 401});
+	}
 
 	jwt.verify(token, config.secret, function(err, decodedUser) {
-		if (err) return res.status(500).send({ auth: false, message: "Failed to authenticate token." });
+		if (err) {
+			return server.sendError(res, {obj: {auth: false, message: "Failed to authenticate token."}, status: 500});
+		}
 
-		if (userId != decodedUser.id) return res.status(403).send({ auth: false, message: "Access is denied" });
+		if (userId != decodedUser.id) {
+			return server.sendError(res, {obj: {auth: false, message: "Access is denied."}, status: 403});
+		}
 
 		usersServices.updateUserById(userId, firstName, lastName)
 			.then((doc) => {
@@ -72,10 +78,18 @@ let updateUserByLogin = function(req, res) {
 	let lastName = req.swagger.params.lastName.value.trim();
 	let token = req.headers["x-access-token"];
 
-	if (!token) return res.status(401).send({ auth: false, message: "No token provided." });
+	if (!token) {
+		return server.sendError(res, {obj: {message: "No token provided.", auth: false}, status: 401});
+	}
 
 	jwt.verify(token, config.secret, function(err, decodedUser) {
-		if (userLogin != decodedUser.login) return res.status(403).send({ auth: false, message: "Access is denied" });
+		if (err) {
+			return server.sendError(res, {obj: {auth: false, message: "Failed to authenticate token."}, status: 500});
+		}
+
+		if (userLogin != decodedUser.login) {
+			return server.sendError(res, {obj: {auth: false, message: "Access is denied."}, status: 403});
+		}
 
 		usersServices.updateUserByLogin(userLogin, firstName, lastName)
 			.then((doc) => {
@@ -92,12 +106,18 @@ let deleteUserById = function(req, res) {
 	let userId = req.swagger.params.userId.value.trim();
 	let token = req.headers["x-access-token"];
 
-	if (!token) return res.status(401).send({ auth: false, message: "No token provided." });
+	if (!token) {
+		return server.sendError(res, {obj: {message: "No token provided.", auth: false}, status: 401});
+	}
 
 	jwt.verify(token, config.secret, function(err, decodedUser) {
-		if (err) return res.status(500).send({ auth: false, message: "Failed to authenticate token." });
+		if (err) {
+			return server.sendError(res, {obj: {auth: false, message: "Failed to authenticate token."}, status: 500});
+		}
 
-		if (userId != decodedUser.id) return res.status(403).send({ auth: false, message: "Access is denied" });
+		if (userId != decodedUser.id) {
+			return server.sendError(res, {obj: {auth: false, message: "Access is denied."}, status: 403});
+		}
 
 		usersServices.deleteUserById(userId)
 			.then((doc) => {
@@ -111,10 +131,18 @@ let deleteUserByLogin = function(req, res) {
 	let userLogin = req.swagger.params.userLogin.value.trim();
 	let token = req.headers["x-access-token"];
 
-	if (!token) return res.status(401).send({ auth: false, message: "No token provided." });
+	if (!token) {
+		return server.sendError(res, {obj: {message: "No token provided.", auth: false}, status: 401});
+	}
 
 	jwt.verify(token, config.secret, function(err, decodedUser) {
-		if (userLogin != decodedUser.login) return res.status(403).send({ auth: false, message: "Access is denied" });
+		if (err) {
+			return server.sendError(res, {obj: {auth: false, message: "Failed to authenticate token."}, status: 500});
+		}
+
+		if (userLogin != decodedUser.login) {
+			return server.sendError(res, {obj: {auth: false, message: "Access is denied."}, status: 403});
+		}
 
 		usersServices.deleteUserByLogin(userLogin)
 			.then((doc) => {

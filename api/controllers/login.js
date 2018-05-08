@@ -3,6 +3,7 @@ const bcrypt = require("bcryptjs");
 
 const loginServices = require("../../server/login/services");
 const config = require("../../config");
+const server = require("../../server/common/services/errors/server");
 
 let authentication = function(req, res) {
 	let login = req.swagger.params.login.value.trim();
@@ -11,18 +12,14 @@ let authentication = function(req, res) {
 	loginServices.authentication(login, password)
 		.then((user) => {
 			if (!user) {
-				res.status(404);
-				res.write(JSON.stringify({ message: "No user found" }, null, 4));
-				res.end();
-                
+				server.sendError(res, {obj: {message: "No user found"}, status: 400});
+
 				return;
 			}
 
 			let passwordIsValid = bcrypt.compareSync(password, user.password);
 			if (!passwordIsValid) {
-				res.status(401);
-				res.write(JSON.stringify({ auth: false }, null, 4));
-				res.end();
+				server.sendError(res, {obj: {message: "Password is invalid", auth: false}, status: 401});
 
 				return;
 			}

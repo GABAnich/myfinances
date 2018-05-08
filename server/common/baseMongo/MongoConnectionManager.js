@@ -1,4 +1,4 @@
-const config = require("../../config");
+const config = require("../../../config");
 const dbConfig = config.dbConfig;
 const arrayOfCollections = config.collections;
 

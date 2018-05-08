@@ -1,7 +1,7 @@
 class Server {
 	sendError(res, err) {
 		res.status(err.status || 500);
-		res.json({message: err.message});
+		res.json(err.obj);
 		res.send();
 	}
 }

@@ -1,6 +1,6 @@
 "use strict";
 
-const mongoConnectionManager = require("./server/baseMongo/MongoConnectionManager");
+const mongoConnectionManager = require("./server/common/baseMongo/MongoConnectionManager");
 
 mongoConnectionManager.connect()
 	.then(() => {
