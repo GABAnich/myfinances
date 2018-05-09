@@ -1,7 +1,7 @@
 const jwt = require("jsonwebtoken");
-const usersServices = require("../../server/users/services");
-const config = require("../../config");
-const server = require("../../server/common/services/errors/server");
+const usersServices = require("../services");
+const config = require("../../../../config");
+const server = require("../../../common/services/errors/server");
 
 let createUser = function(req, res) {
 	let login = req.swagger.params.login.value.trim();

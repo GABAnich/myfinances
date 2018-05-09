@@ -1,6 +1,7 @@
 "use strict";
 
 const mongoConnectionManager = require("./server/common/baseMongo/MongoConnectionManager");
+require("./server/common/addControllersDirsToSwagger");
 
 mongoConnectionManager.connect()
 	.then(() => {
@@ -22,8 +23,6 @@ app.use( (req, res, next) => {
 	res.header("Content-Type", "application/json");
 	next();
 });
-// authmidleware перевірка токена
-// якщо токен не пройшов перевірку - помилка
 
 module.exports = app; // for testing
 
@@ -43,8 +42,4 @@ SwaggerExpress.create(config, function(err, swaggerExpress) {
 
 		console.log("Server is running on http://localhost:3000");
 	});
-
-	if (swaggerExpress.runner.swagger.paths["/hello"]) {
-		// console.log('try this:\ncurl http://127.0.0.1:' + port + '/hello?name=Scott');
-	}
 });
