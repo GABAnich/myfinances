@@ -1,7 +1,9 @@
 "use strict";
 
 const mongoConnectionManager = require("./server/common/baseMongo/MongoConnectionManager");
-require("./server/common/addControllersDirsToSwagger");
+const addControllersDirsToSwagger = require("./server/common/addControllersDirsToSwagger");
+
+addControllersDirsToSwagger.init();
 
 mongoConnectionManager.connect()
 	.then(() => {

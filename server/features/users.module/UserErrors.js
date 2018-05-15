@@ -1,3 +1,4 @@
+const server = require("../../common/services/errors/server");
 const BaseErrors = require("../../common/services/errors/BaseErrors");
 
 class UserErrors extends BaseErrors {
@@ -19,6 +20,18 @@ class UserErrors extends BaseErrors {
 
 	errorExistLogin(login) {
 		throw {obj: {message: `User with login ${login} is already exist`}, status: 409};
+	}
+
+	noToken(res) {
+		return server.sendError(res, {obj: {auth: false, message: "No token provided."}, status: 401});
+	}
+
+	accessDenied(res) {
+		return server.sendError(res, {obj: {auth: false, message: "Access is denied."}, status: 403});
+	}
+	
+	failedAuthenticate(res) {
+		return server.sendError(res, {obj: {auth: false, message: "Failed to authenticate token."}, status: 500});
 	}
 }
 

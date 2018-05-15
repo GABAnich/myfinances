@@ -2,6 +2,8 @@ const jwt = require("jsonwebtoken");
 const usersServices = require("../services");
 const config = require("../../../../config");
 const server = require("../../../common/services/errors/server");
+const UserErrors = require("../UserErrors");
+const userErrors = new UserErrors();
 
 let createUser = function(req, res) {
 	let login = req.swagger.params.login.value.trim();
@@ -52,16 +54,16 @@ let updateUserById = function(req, res) {
 	let token = req.headers["x-access-token"];
 
 	if (!token) {
-		return server.sendError(res, {obj: {message: "No token provided.", auth: false}, status: 401});
+		return userErrors.noToken(res);
 	}
 
 	jwt.verify(token, config.secret, function(err, decodedUser) {
 		if (err) {
-			return server.sendError(res, {obj: {auth: false, message: "Failed to authenticate token."}, status: 500});
+			return userErrors.failedAuthenticate(res);
 		}
 
 		if (userId != decodedUser.id) {
-			return server.sendError(res, {obj: {auth: false, message: "Access is denied."}, status: 403});
+			return userErrors.accessDenied(res);
 		}
 
 		usersServices.updateUserById(userId, firstName, lastName)
@@ -79,16 +81,16 @@ let updateUserByLogin = function(req, res) {
 	let token = req.headers["x-access-token"];
 
 	if (!token) {
-		return server.sendError(res, {obj: {message: "No token provided.", auth: false}, status: 401});
+		return userErrors.noToken(res);
 	}
 
 	jwt.verify(token, config.secret, function(err, decodedUser) {
 		if (err) {
-			return server.sendError(res, {obj: {auth: false, message: "Failed to authenticate token."}, status: 500});
+			return userErrors.failedAuthenticate(res);
 		}
 
 		if (userLogin != decodedUser.login) {
-			return server.sendError(res, {obj: {auth: false, message: "Access is denied."}, status: 403});
+			return userErrors.accessDenied(res);
 		}
 
 		usersServices.updateUserByLogin(userLogin, firstName, lastName)
@@ -107,16 +109,16 @@ let deleteUserById = function(req, res) {
 	let token = req.headers["x-access-token"];
 
 	if (!token) {
-		return server.sendError(res, {obj: {message: "No token provided.", auth: false}, status: 401});
+		return userErrors.noToken(res);
 	}
 
 	jwt.verify(token, config.secret, function(err, decodedUser) {
 		if (err) {
-			return server.sendError(res, {obj: {auth: false, message: "Failed to authenticate token."}, status: 500});
+			return userErrors.failedAuthenticate(res);
 		}
 
 		if (userId != decodedUser.id) {
-			return server.sendError(res, {obj: {auth: false, message: "Access is denied."}, status: 403});
+			return userErrors.accessDenied(res);
 		}
 
 		usersServices.deleteUserById(userId)
@@ -132,16 +134,16 @@ let deleteUserByLogin = function(req, res) {
 	let token = req.headers["x-access-token"];
 
 	if (!token) {
-		return server.sendError(res, {obj: {message: "No token provided.", auth: false}, status: 401});
+		return userErrors.noToken(res);
 	}
 
 	jwt.verify(token, config.secret, function(err, decodedUser) {
 		if (err) {
-			return server.sendError(res, {obj: {auth: false, message: "Failed to authenticate token."}, status: 500});
+			return userErrors.failedAuthenticate(res);
 		}
 
 		if (userLogin != decodedUser.login) {
-			return server.sendError(res, {obj: {auth: false, message: "Access is denied."}, status: 403});
+			return userErrors.accessDenied(res);
 		}
 
 		usersServices.deleteUserByLogin(userLogin)
