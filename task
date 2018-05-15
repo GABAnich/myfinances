@@ -10,13 +10,12 @@ jwt'oken + bcrypt
 + Переміщати директорії в server
 + Контролери і сервіси сидять в одній директорії .module (Динамічно підтягувати в default.yaml)
 
++ users.js перенести помилки з user controllers в UserErrors.js
++ login.js перенести помилки в loginErrors.js
+
 controllerName.ctrl.js
 serviceName.service.js
 Один контролер в модулі
 swaggerExpress - додати path до директорій
 
 в токені зберігати login and hashedPassword
-
-users.js перенести помилки з user controllers в UserErrors
-
-- Перенести авторизація в service
