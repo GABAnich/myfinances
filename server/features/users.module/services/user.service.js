@@ -1,4 +1,4 @@
-const mongoConnectionManager = require("../../../server/common/baseMongo/MongoConnectionManager");
+const mongoConnectionManager = require("../../../../server/common/baseMongo/MongoConnectionManager");
 const validator = require("./validator");
 const UserErrors = require("./UserErrors");
 const userErrors = new UserErrors();

@@ -10,7 +10,7 @@ function init() {
 
 	fs.readdirSync(features).forEach(file => {
 		if (file.indexOf(".module") > -1) {
-			arrayOfDirs.push(`server/features/${file}/controllers`);
+			arrayOfDirs.push(`server/features/${file}/`);
 		}
 	});
 

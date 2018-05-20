@@ -10,8 +10,8 @@ swagger:
       mockControllersDirs:
         - api/mocks
       controllersDirs:
-        - server/features/login.module/controllers
-        - server/features/users.module/controllers
+        - server/features/login.module/
+        - server/features/users.module/
     _swagger_validate:
       name: swagger_validator
       validateResponse: true

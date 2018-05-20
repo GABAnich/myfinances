@@ -1,8 +1,8 @@
 const jwt = require("jsonwebtoken");
-const usersServices = require("../services");
-const config = require("../../../../config");
-const server = require("../../../common/services/errors/server");
-const UserErrors = require("../UserErrors");
+const usersServices = require("./services/user.service");
+const config = require("../../../config");
+const server = require("../../common/services/errors/server");
+const UserErrors = require("./services/UserErrors");
 const userErrors = new UserErrors();
 
 let createUser = function(req, res) {

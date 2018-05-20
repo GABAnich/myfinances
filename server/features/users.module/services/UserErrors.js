@@ -1,5 +1,5 @@
-const server = require("../../common/services/errors/server");
-const BaseErrors = require("../../common/services/errors/BaseErrors");
+const server = require("../../../common/services/errors/server");
+const BaseErrors = require("../../../common/services/errors/BaseErrors");
 
 class UserErrors extends BaseErrors {
 	errorEmptyParams(property) {

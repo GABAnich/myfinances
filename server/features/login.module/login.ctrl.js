@@ -1,9 +1,9 @@
 const jwt = require("jsonwebtoken");
 const bcrypt = require("bcryptjs");
 
-const loginServices = require("../services");
-const config = require("../../../../config");
-const LoginErrors = require("../LoginErrors");
+const loginServices = require("./services/login.service");
+const config = require("../../../config");
+const LoginErrors = require("./services/LoginErrors");
 const loginErrors = new LoginErrors();
 
 let authentication = function(req, res) {

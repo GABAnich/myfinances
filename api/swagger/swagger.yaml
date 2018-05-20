@@ -21,7 +21,7 @@ produces:
   - text/html
 paths:
   /login:
-    x-swagger-router-controller: login
+    x-swagger-router-controller: login.ctrl
     post:
       parameters:
         - in: formData
@@ -45,7 +45,7 @@ paths:
           schema:
             $ref: "#/definitions/ErrorResponse"
   /users:
-    x-swagger-router-controller: users
+    x-swagger-router-controller: users.ctrl
     post:
       parameters:
         - in: formData
@@ -80,7 +80,7 @@ paths:
           schema:
             $ref: "#/definitions/ErrorResponse"
   /users/id/{userId}:
-    x-swagger-router-controller: users
+    x-swagger-router-controller: users.ctrl
     get:
       parameters:
         - in: path
@@ -141,7 +141,7 @@ paths:
             $ref: "#/definitions/ErrorResponse"
     
   /users/login/{userLogin}:
-    x-swagger-router-controller: users
+    x-swagger-router-controller: users.ctrl
     get:
       parameters:
         - in: path

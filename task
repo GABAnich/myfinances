@@ -6,16 +6,11 @@ material design icons
 
 jwt'oken + bcrypt
 
-+ Видалити error..if..sendStatus і інше
-+ Переміщати директорії в server
 + Контролери і сервіси сидять в одній директорії .module (Динамічно підтягувати в default.yaml)
-
 + users.js перенести помилки з user controllers в UserErrors.js
 + login.js перенести помилки в loginErrors.js
-
-controllerName.ctrl.js
-serviceName.service.js
-Один контролер в модулі
-swaggerExpress - додати path до директорій
++ controllerName.ctrl.js
++ serviceName.service.js
++ Один контролер в модулі
 
 в токені зберігати login and hashedPassword
