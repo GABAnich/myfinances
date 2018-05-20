@@ -19,17 +19,17 @@ mongoConnectionManager.connect()
 		if (err) throw err;
 	});
 
-var SwaggerExpress = require("swagger-express-mw");
-var app = require("express")();
+let SwaggerExpress = require("swagger-express-mw");
+let app = require("express")();
 app.use( (req, res, next) => {
 	res.header("Content-Type", "application/json");
 	next();
 });
 
-module.exports = app; // for testing
+module.exports = app;
 
-var config = {
-	appRoot: __dirname // required config
+let config = {
+	appRoot: __dirname
 };
 
 SwaggerExpress.create(config, function(err, swaggerExpress) {
@@ -38,7 +38,7 @@ SwaggerExpress.create(config, function(err, swaggerExpress) {
 	// install middleware
 	swaggerExpress.register(app);
 
-	var port = process.env.PORT || 3000;
+	let port = process.env.PORT || 3000;
 	app.listen(port, function(err) {
 		if (err) throw err;
 
