@@ -33,6 +33,11 @@ function createUser(login, password, firstName, lastName) {
 			let hashedPassword = bcryptjs.hashSync(password);
 
 			return mongoConnectionManager.collections.usersDal.createUser(login, hashedPassword, firstName, lastName);
+		})
+		.then((user) => {
+			let token = jwt.sign({ login: user.ops[0].login }, config.secret);
+
+			return Promise.resolve(token);
 		});
 }
 

@@ -1,6 +1,4 @@
-const jwt = require("jsonwebtoken");
 const usersServices = require("./services/user.service");
-const config = require("../../../config");
 const server = require("../../common/services/errors/server");
 
 let createUser = function(req, res) {
@@ -10,9 +8,7 @@ let createUser = function(req, res) {
 	let lastName = req.swagger.params.lastName.value.trim();
 
 	usersServices.createUser(login, password, firstName, lastName)
-		.then((user) => {
-			let token = jwt.sign({ login: user.ops[0].login }, config.secret);
-
+		.then((token) => {
 			res.status(201);
 			res.write(JSON.stringify({ auth: true, token: token }, null, 4));
 			res.end();
