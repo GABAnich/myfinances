@@ -35,7 +35,9 @@ function createUser(login, password, firstName, lastName) {
 			return mongoConnectionManager.collections.usersDal.createUser(login, hashedPassword, firstName, lastName);
 		})
 		.then((user) => {
-			let token = jwt.sign({ login: user.ops[0].login }, config.secret);
+			let token = jwt.sign({ login: user.login }, config.secret, {
+				expiresIn: 86400
+			});
 
 			return Promise.resolve(token);
 		});

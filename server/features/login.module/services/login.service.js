@@ -18,7 +18,9 @@ let authentication = function(login, password) {
 				loginErrors.invalidPassword();
 			}
 
-			let token = jwt.sign({ id: user._id, login: user.login }, config.secret);
+			let token = jwt.sign({ login: user.login }, config.secret, {
+				expiresIn: 86400
+			});
 
 			return Promise.resolve(token);
 		});
