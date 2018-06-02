@@ -2,8 +2,6 @@ const jwt = require("jsonwebtoken");
 const usersServices = require("./services/user.service");
 const config = require("../../../config");
 const server = require("../../common/services/errors/server");
-const UserErrors = require("./services/UserErrors");
-const userErrors = new UserErrors();
 
 let createUser = function(req, res) {
 	let login = req.swagger.params.login.value.trim();
@@ -13,7 +11,7 @@ let createUser = function(req, res) {
 
 	usersServices.createUser(login, password, firstName, lastName)
 		.then((user) => {
-			let token = jwt.sign({ id: user.insertedId, login: user.ops[0].login }, config.secret);
+			let token = jwt.sign({ login: user.ops[0].login }, config.secret);
 
 			res.status(201);
 			res.write(JSON.stringify({ auth: true, token: token }, null, 4));
@@ -41,9 +39,6 @@ let getUserByLogin = function(req, res) {
 		.then((doc) => {
 			res.write(JSON.stringify(doc, null, 4));
 			res.end();
-		})
-		.catch((err) => {
-			server.sendError(res, err);
 		});
 };
 
@@ -53,25 +48,14 @@ let updateUserById = function(req, res) {
 	let lastName = req.swagger.params.lastName.value.trim();
 	let token = req.headers["x-access-token"];
 
-	if (!token) {
-		return userErrors.noToken(res);
-	}
-
-	jwt.verify(token, config.secret, function(err, decodedUser) {
-		if (err) {
-			return userErrors.failedAuthenticate(res);
-		}
-
-		if (userId != decodedUser.id) {
-			return userErrors.accessDenied(res);
-		}
-
-		usersServices.updateUserById(userId, firstName, lastName)
-			.then((doc) => {
-				res.write(JSON.stringify(doc, null, 4));
-				res.end();
-			});
-	});
+	usersServices.updateUserById(userId, firstName, lastName, token)
+		.then((doc) => {
+			res.write(JSON.stringify(doc, null, 4));
+			res.end();
+		})
+		.catch((err) => {
+			server.sendError(res, err);
+		});
 };
 
 let updateUserByLogin = function(req, res) {
@@ -80,81 +64,42 @@ let updateUserByLogin = function(req, res) {
 	let lastName = req.swagger.params.lastName.value.trim();
 	let token = req.headers["x-access-token"];
 
-	if (!token) {
-		return userErrors.noToken(res);
-	}
-
-	jwt.verify(token, config.secret, function(err, decodedUser) {
-		if (err) {
-			return userErrors.failedAuthenticate(res);
-		}
-
-		if (userLogin != decodedUser.login) {
-			return userErrors.accessDenied(res);
-		}
-
-		usersServices.updateUserByLogin(userLogin, firstName, lastName)
-			.then((doc) => {
-				res.write(JSON.stringify(doc, null, 4));
-				res.end();
-			})
-			.catch((err) => {
-				server.sendError(res, err);
-			});
-	});
+	usersServices.updateUserByLogin(userLogin, firstName, lastName, token)
+		.then((doc) => {
+			res.write(JSON.stringify(doc, null, 4));
+			res.end();
+		})
+		.catch((err) => {
+			server.sendError(res, err);
+		});
 };
 
 let deleteUserById = function(req, res) {
 	let userId = req.swagger.params.userId.value.trim();
 	let token = req.headers["x-access-token"];
 
-	if (!token) {
-		return userErrors.noToken(res);
-	}
-
-	jwt.verify(token, config.secret, function(err, decodedUser) {
-		if (err) {
-			return userErrors.failedAuthenticate(res);
-		}
-
-		if (userId != decodedUser.id) {
-			return userErrors.accessDenied(res);
-		}
-
-		usersServices.deleteUserById(userId)
-			.then((doc) => {
-				res.write(JSON.stringify(doc, null, 4));
-				res.end();
-			});
-	});
+	usersServices.deleteUserById(userId, token)
+		.then((doc) => {
+			res.write(JSON.stringify(doc, null, 4));
+			res.end();
+		})
+		.catch((err) => {
+			server.sendError(res, err);
+		});
 };
 
 let deleteUserByLogin = function(req, res) {
 	let userLogin = req.swagger.params.userLogin.value.trim();
 	let token = req.headers["x-access-token"];
 
-	if (!token) {
-		return userErrors.noToken(res);
-	}
-
-	jwt.verify(token, config.secret, function(err, decodedUser) {
-		if (err) {
-			return userErrors.failedAuthenticate(res);
-		}
-
-		if (userLogin != decodedUser.login) {
-			return userErrors.accessDenied(res);
-		}
-
-		usersServices.deleteUserByLogin(userLogin)
-			.then((doc) => {
-				res.write(JSON.stringify(doc, null, 4));
-				res.end();
-			})
-			.catch((err) => {
-				server.sendError(res, err);
-			});
-	});
+	usersServices.deleteUserByLogin(userLogin, token)
+		.then((doc) => {
+			res.write(JSON.stringify(doc, null, 4));
+			res.end();
+		})
+		.catch((err) => {
+			server.sendError(res, err);
+		});
 };
 
 module.exports = {
